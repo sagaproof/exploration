@@ -1,0 +1,79 @@
+
+\emph{Sagaproof} is a project aimed toward the development and adoption of \emph{sagaproofs}, a variant of so-called zero-knowledge proofs.
+
+For a temporary introduction, below is a crude list of activities pursued by this project, though the summaries may not make sense until expanded into complete articles.
+
+\begin{itemize}
+
+    \item{ZKP vs FHE}
+    Examining the duality of ZKP and FHE, as an augmentation of the duality of SIS and LWE.
+    Noting how ZKP schemes are significantly more practical than FHE schemes due to an asymmetry of their duality.
+    Exploring possibilities to leverage techniques from the well established field of FHE to complement the developing field of ZKP.
+    Proving soundness of Fiat-Shamir for ZKP under the circular security of FHE.
+
+    \item{statement reduction and entropy reduction}
+    Examining how the functionality of succinct proofs of knowledge may be broken into statement reduction and entropy reduction.
+    Statement reduction reduces statements of knowledge to statements of polynomial evaluation on committed data (which varies across proofs) and logic data (which is invariant across proofs).
+    Entropy reduction reduces statements of polynomial evaluation on committed data to statements of polynomial evaluation on noticeably less data.
+    Proof composition allows entropy reduction techniques to be used repeatedly to achieve minimal proof size.
+    Early stages of the repetition may use techniques suited for heavy weight data.
+    Later stages of the repetition may use techniques suited for light weight data.
+
+    \item{statement reduction techniques}
+    Exploring the balance of prover complexity and round complexity.
+    Some statement reduction techniques feature constant round complexity at the cost of super-linear prover complexity.
+    Some statement reduction techniques feature linear prover complexity at the cost of non-constant round complexity.
+    Perhaps the two complexities satisfy an asymptotic identity, such as their product being at least quasilinear.
+    The balance between the two can vary with the proof depending on circumstances.
+
+    \item{tail recursion}
+    Reducing the cost of proof composition by avoiding regular recursion where the entire proof is verified, instead using tail recursion where as much verification as possible is postponed and pushed to the next proof to maximize amortization.
+    Verification involves statement reduction verification and entropy reduction verification. 
+    Entropy reduction verification is pushed downstream as far as possible to maximize amortization across the entropy of other proofs.
+    Statement reduction verification involves checking round-consistency and checking polynomial evaluation of logic data.
+    Checks regarding round-consistency are performed inside the verifying proof but some parts are still amenable to amortization, such as batching hashing for Fiat-Shamir.
+    Checks regarding evaluation of logic data are completely amortized and never executed inside proofs.
+    With the logic data shared in between interacting provers, evaluation may be pushed from one prover to the next indefinitely.
+
+    \item{univariate codes for entropy reduction}
+    Exploring alternative proof techniques for worst-case to average-case distance preservation.
+    Exploring additional means of randomization, though proving their benefit may be challenging.
+    Noting how the folding of univariate polynomial codes allows for treatment as evaluations of multivariate polynomials when each fold of entropy reduction is properly interspersed with each round of statement reduction.
+
+    \item{random codes for entropy reduction}
+    Using random codes in effort to reduce query complexity by taking advantage of computational hardness assumptions.
+    Using random codes for heavy weight entropy reduction to maximize amortization across proofs involving the same prover.
+
+    \item{lattices for entropy reduction}
+    Improving the constants in SIS entropy reduction by expanding possibilities for randomization.
+    Using lattices for heavy weight entropy reduction to maximize amortization across proofs involving the same prover.
+
+    \item{multivariates for entropy reduction}
+    Using multivariate hardness assumptions to offer another means to entropy reduction.
+    Using multivariates for light weight entropy reduction to minimize proof-size across proofs involving different provers.
+
+    \item{discrete log for entropy reduction}
+    Avoiding the need for pairings and thus the need for any pairing-friendly elliptic curve within elliptic curve cycles.
+    Using discrete log for light weight entropy reduction to minimize proof-size across proofs involving different provers.
+
+    \item{non-unique commitment}
+    Noting how prover can commit to any number of witnesses and proof is valid if any witness is valid.
+    Need for a commitment to a unique witness then drops to need to a commitment on a polynomial number of witnesses, thus loosening restrictions on entropy reduction techniques.
+
+    \item{outsourcing proofs}
+    Outsourcing proving tasks from clients to servers without sacrificing privacy. 
+    Using symmetric encryption between the entropy reduction of the witness and the statement reduction of the witness such that the witness (apart from the secret key) may be outsourced for any entropy reduction techniques.
+    Using MIPs to outsource polynomial evaluations of logic data.
+
+    \item{proof trees}
+    Using a push-pull messaging model based on proof trees to avoid the double-spending problem, allowing a network of arbitrary size to reach consensus on global state in logarithmic time.
+    Any subset of parties may share private data and private logic, only publishing zk-proofs of validity in the proof trees.
+    Proof trees may be replaced by hash trees for a decrease in network costs at the expense of an increase in proving costs.
+    With all logic chosen per interacting parties, globally shared logic is minimal, thus requiring minimal global consensus on policies.
+    Any choice of delegating data storage, which introduces the problem of data availability, may be decided on a per party or per application basis. 
+    Rather than proof of work (PoW) or proof of stake (PoS), the network relies on proof of knowledge (PoK).
+    Contrasted with PoW, meaningless hash computations are replaced by meaningful proof computations.
+    Contrasted with PoS, there is no risk of collusion and their is no need for a global token.
+
+\end{itemize}
+
