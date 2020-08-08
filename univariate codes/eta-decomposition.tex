@@ -1,13 +1,13 @@
 
 
-\begin{theorem}[Polynomial $\eta$-decomposition]
+\begin{theorem}[polynomial eta-decomposition]
     Any polynomial $p$ may be decomposed by any non-constant polynomial $\Eta$.
     Letting $\eta = \deg(\Eta)$ we may decompose $p$ into $\eta$ polynomials $p_0,\dots,\p_{\eta-1}$ all of degree less than $\deg(p)/\eta$ such that
     \begin{align}
         p(x) = \sum_{i=0}^{\eta-1} p_i(\Eta(x))x^i
     \end{align}
     \begin{remark}
-        The symbol "$\Eta$" is not the uppercase Latin letter "H" but rather the uppercase Greek letter "Eta," while $\eta$ is the corresponding lowercase letter.
+        The symbol `$\Eta$' is not the uppercase Latin letter `H' but rather the uppercase Greek letter `Eta,' while `$\eta$' is the corresponding lowercase letter.
         We choose $\eta$ due to its analogous role in the polynomial decomposition of \cite{BBHR18}.
     \end{remark}
 
@@ -18,7 +18,7 @@
     \end{align}
     where $p'_0,\dots,p'_{\floor{\deg(p)/\eta}}$ are all of degree less than $\eta$.
 
-    \begin{enumerate}
+    \begin{itemize}
         \textbf{Decompose}.
         \\
         Input: polynomial $t$.
@@ -38,7 +38,7 @@
         \item
         For any $\alpha\in\R$ we have the identity $\floor{\alpha}+1 = \floor{\alpha+1}$, yielding
         \begin{aling}
-            \floor{\deg(q)/\eta} + 1 = \floor{\deg(q)/\eta + 1} = \floor{\deg(t)/\eta
+            \floor{\deg(q)/\eta}+1 = \floor{\deg(q)/\eta+1} = \floor{\deg(t)/\eta
         \end{align}.
         Now $t$ may be expressed as
         \begin{align}
@@ -48,7 +48,7 @@
             &= r(x) + \sum_{i=1}^{\floor{\deg(t)/\eta}} q_{i-1}(x)\Eta(x)^i
         \end{align}
         Return $t_0,\dots,t_{\floor{\deg(t)/\eta}} = r,q_0,\dots,q_{\floor{\deg(t)/\eta}}$, noting they satisfy the promised properties.
-    \end{enumerate}
+    \end{itemize}
 
     The current decomposition is a polynomial with respect to $\Eta(x)$ of degree less than $\deg(t)/\eta$ with coefficients as polynomials with respect to $x$ of degree less than $\eta$. 
     \\
@@ -60,16 +60,22 @@
 \end{theorem}
 
 
-\begin{theorem}[$\eta$-decomposition by interpolation]
+\begin{theorem}[eta-decomposition by interpolation]
     If the preimage of $\alpha$ under $\Eta$ has size at least $\eta$ then interpolating $p$ over this preimage yields a polynomial with coefficients $p_0(\alpha),\dots,p_{\eta-1}(\alpha)$, namely the $\eta$-decomposition polynomials of $p$ on $\alpha$.
 
     \proof
-    Let $Y = \Eta^{-1}(\alpha)$.
-    Suppose $|Y|\geq\eta$.
+    Let $Y = \Eta^{-1}(\alpha)$, and suppose $|Y|\geq\eta$.
     Then $p$ restricted to $Y$ yields the polynomial
     \begin{align}
         p(y) = \sum_{i=0}^{\eta-1} p_i(\alpha)y^i
     \end{align}
-    This polynomial of degree less than $\eta$ may be interpolated from any $\eta$ values of $Y$, thus extracting coefficients $p_0(\alpha),\dots,p_{\eta-1}(\alpha)$.
+    This polynomial of degree less than $\eta$ may be interpolated over any $\eta$ values of $Y$, thus extracting coefficients $p_0(\alpha),\dots,p_{\eta-1}(\alpha)$.
 \end{definition}
+
+
+
+
+
+
+
 
