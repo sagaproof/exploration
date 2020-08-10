@@ -1,0 +1,195 @@
+ 
+\emph{Mathematics} underpins proof systems such as sagaproofs because it offers a well established framework for rigorous analysis necessary to justify security.
+Here we are referring to the use of mathematics in the \emph{construction} of proof systems, but other types of mathematics are used in the \emph{analysis} of proof systems.
+Here we discuss the motivations behind the use of finite algebraic structures (in particular rings and fields) throughout sagaproofs and other proof systems.
+We also introduce the important algebraic concepts of quotients and extensions.
+This discussion is informal and formal definitions are clarified elsewhere when appropriate.
+
+
+\section{Restricting to finite structures}
+
+While mathematical structures are many and varied, only those suited for constructing proof systems are of interest for our purposes.
+What exactly constitutes suitability for proof systems is not yet fully qualified, but a minimal requirement is efficient representation and manipulation on a computer.
+Infinite structures can be challenging to handle in this sense, especially when enforcing consistency across computers, which is crucial in the case of proof systems involving many parties.
+Therefore, narrowing focus to finite structures seems justifiable.
+
+By many metrics, the majority of mathematical research targets infinite structures, so narrowing focus to finite structures excludes the majority of possibilities.
+This may be seen as both a boon and a bane in that while limiting opportunity it also focuses attention.
+The rich class of structures just beyond finite structures is finitely \emph{generated} structures, which cannot be entirely ruled out, and as such the choice of finite structures is not fully justified.
+Nevertheless, finite structures are the structures of choice for now.
+
+
+\section{Choice of finite structures}
+
+Restricting to finite structures still leaves an infinite number of possibilities.
+We must further restrict attention to those structures in which we see opportunity for proof systems.
+In fact, we must restrict even further to those that seem appropriate for \emph{practical} proof systems.
+
+Diverging for a moment, the term `practical' for qualifying proof systems, or more generally any solution to a technical problem, can be ambiguous.
+Some solutions are capable of implementation in the near future, say the next decade.
+These solutions are largely dependent on current technologies and their near-term trajectories.
+Other solutions are only capable of implementation some time in the distant future.
+These solutions are largely insensitive to the current state of technology.
+Throughout this project we refer to the former types of solutions as `practical' and the latter types as `impractical'.
+In both cases, academic literature may refer to a solution as `efficient' because it requires bounded resources as a function of the problem size.
+Specifically, bounds are taken to be polynomial functions in order that efficient solutions may be combined in various ways while remaining efficient.
+Do not confuse `efficient' with `practical' as many solutions are efficient but impractical.
+A solution may be efficient since it meets certain resource bounds, and yet impractical since the resources demanded are more than current technology can provide.
+
+\begin{remark}
+    While there is some fundamental difference between efficient and inefficient solutions, there is no fundamental difference between practical and impractical solutions.
+    The practicality of a solution is dependent on the capability of modern technology, which in turn is dependent on the ever-changing scale and sophistication of human civilization.
+    The efficiency of a solution, on the other hand, is fixed and independent of human civilization. 
+    There is no reason the efficiency and practicality of solutions should exhibit any correlation.
+
+    On a spectrum from the Plank length to the diameter of the observable universe, the size of human civilization sits in a rather arbitrary position roughly in the middle.
+    Given our relative size, we are lucky to control enough atoms in this universe to implement many efficient solutions, and yet our limited control leaves so many efficient solutions out of practical reach.
+\end{remark}
+
+In our context the solutions we seek are proof systems, and the technologies of concern are computing and networking technologies.
+In particular, we are concerned with the affordable speed and volume of computer calculations and network signals.
+These metrics are what separate the practical from the impractical.
+
+Academic literature on proof systems can be roughly split into the `theoretical' type and the `applied' type.
+Theoretical research is motivated by efficient solutions, which may be impractical.
+Applied research is motivated by practical solutions, which are always efficient.
+Since theoretical research pursues solutions independent of current technology, any mathematical structure amenable for proof systems suffices.
+Since applied research pursues solutions highly dependent on current technology, choices of mathematical structures are more severely limited.
+
+A set of finite structures of popular use in theoretical research but of rare use in applied research is graphs, that is the set of structures each consisting of a finite number of objects and the connections between them.
+For example, expander graphs played a central role in \cite{Din07} to prove the PCP Theorem, likely the most important result in theoretical proof systems.
+Graphs are extensively studied, including the expander graphs that may be of use for our purposes.
+The use of graphs in proof systems, however, seems to require resources beyond the capacity of modern technology.
+
+On the other hand, a set of finite structures of popular use in both theoretical and applied research is finite fields, that is a certain set of highly symmetric algebraic structures.
+Finite fields are extensively studied and possess many homomorphic properties desirable for our purposes.
+Furthermore, many uses of finite fields in proof systems require resources within the capacity of modern computing and networking technologies.
+
+Much of our focus in this project is devoted to finite fields.
+Finite fields are the finite objects of study in `field theory' which itself is embedded in `ring theory.'
+Our choice of finite structures is finite rings, and much of the time we restrict attention to finite fields.
+If this choice of finite structures seems arbitrary, see the section below regarding arithmetic.
+Ring theory may be viewed as the natural generalization of arithmetic, and arithmetic is anything but arbitrary.
+
+
+\section{Representing structures}
+
+Our mathematical structures of choice, rings and in particular finite fields, belong to a larger class of mathematical structures called \emph{algebraic} structures. 
+An algebraic structure consists of a set of objects, called \emph{elements}, and relationships between those elements.
+A defining characteristic of algebraic structures is that relationships between elements are described by the elements themselves. 
+This is in contrast to other types of structures like graphs, where the connections between objects (i.e. edges between vertices) are not described by objects but by truth values.
+The circular nature of algebraic relationships may be what gives them so much richness that has attracted so much attention for study.
+
+In an algebraic structure, the most basic relationship is the familiar notion of equality, and every element is considered equal to itself.
+Equality is a unary relationship as it pertains to every element individually.
+Unary relationships can be represented as unary functions between the elements.
+In the case of equality the unary function would be the identity function, that which sends every element to itself.
+
+One step beyond unary relationships are binary relationships.
+A binary relationship applies to every pair of elements, describing the relationship of each pair by a third element.
+Binary relationships can be represented as binary functions between the elements.
+Beyond binary relationships are ternary relationships applying to every triple of elements, and one may continue further with relationships of every higher arity.
+It turns out, however, that most study does not go beyond binary relationships.
+This is likely because binary relationships capture enough complexity for most purposes of study, and relationships of higher arity either yield no additional complexity or yield so much complexity only special cases can be meaningfully studied.
+
+Since relationships are represented as functions from elements to elements, they are called \emph{operations} in that they operate on inputs elements to produce an output element.
+Formally, an algebraic structure consists of a set of elements together with one or more operations defined on those elements.
+Informally, however, an algebraic structure is often identified only by the set of elements and the operations are left to be determined from context.
+Henceforth in our study of structures, all structures are algebraic structures, represented by sets and operations that can be gleaned from context when not specified.
+
+A ring is an algebraic structure with addition and multiplication operations, from which one may derive others such as subtraction and exponentiation.
+A finite field a ring that also allows for a division operation.
+
+
+\section{Building structures}
+
+Complex algebraic structures can be built from simpler structures by a sequence of steps through intermediate structures.
+There may exist multiple paths from one structure to another, and the steps in any path may not be strictly ordered.
+A step from one structure to another is a transformation from one to another.
+There are three different kinds of transformations.
+
+\begin{itemize}
+
+    \item{Derived definition}
+    Derived definitions are different in nature than the quotients and extensions described below.
+    Given a structure, we may define a new set of elements in terms of existing elements, and new operations in terms of existing operations.
+    An example is matrix algebra where new elements are blocks of existing elements, and new operations are formulated in terms of existing addition and multiplication operations.
+
+    \item{Quotient}
+    A \emph{quotient} is best thought of as a contraction, the dual of an extension (see below).
+    The name `contraction' would be most fitting, but we follow the standard name `quotient.'
+    Given a structure, we may declare two elements to be equal.
+    Doing so yields a new structure with the same operations and fewer elements, thus a contraction of the original structure.
+
+    Such a transformation can naturally be expressed by an equation involving any existing elements.
+    When the equation holds in the original structure the transformation is trivial and no contraction occurs.
+    When the equation does not hold in the original structure, the transformation is non-trivial and any amount of contraction may occur.
+
+    An example is taking integers with addition and multiplication and declaring the equation $2=0$.
+    This yields a structure with two elements identifiable as the two truth values.
+    Addition now corresponds to exclusive disjunction (XOR) and multiplication to conjunction (AND).
+
+    \item{Extension}
+    An \emph{extension} is best thought of as an expansion, the dual of a quotient.
+    The name `expansion' would be most fitting, but we follow the standard name `extension.'
+    Given a structure, we may introduce a new element.
+    Doing so yields a new structure with the same operations and more elements, thus an expansion of the original structure.
+
+    Such a transformation can naturally be expressed by an optional equation describing the new element in terms of existing elements.
+    When the equation is not given, the new element is called \emph{transcendental} over the original structure, and infinite expansion occurs.
+    When the equation is given, the new element is called \emph{algebraic} over the original structure, and any amount of expansion may occur.
+    The word `transcendental' reflects how the new element transcends anything expressible in the original structure.
+    The word `algebraic' reflects how the new element is algebraically expressible in the original structure.
+
+    An example is taking real numbers with addition and multiplication and introducing the element $i$ with the equation $i^2+1=0$. 
+    This yields the complex numbers. 
+
+\end{itemize}
+
+In the special case of rings and finite fields, we may express quotients and (usually) extensions in special ways and special notation is used for each.
+In both cases, we may replace the equation specifying the new structure with only an expression to act as one side of the equation with the other side predetermined.
+In the case of quotients, the predetermined side is zero, an element present in every ring structure.
+In the case of extensions, the predetermined side is the new element.
+Isolating the new element on one side of the equation is usually doable using ring operations, namely addition, multiplication, exponentiation, and their inverted versions when they exist (as they do for finite fields).
+
+As for notation, suppose we have existing ring structure $R$ and expression $E$.
+In the case of quotients we may express the new structure as $R\mod E$ or $R/E$. 
+The former is read as `R modulo E' and the latter as `R over E.'
+In the case of extensions we may express the new structure as $R[E]$, and iterated extensions of the form $R[E_1][E_2],\dots,[E_n]$ may be simplified to $R[E_1,E_2,\dots,E_n]$.
+This is read as `adjoining elements $E_1,E_2,\dots,E_n$ to $R$.'
+In the quotient and extension examples above, the relevant expressions are $2$ and $i^2+1$ respectively, and the relevant notations are $\Z\mod 2$ and $\R[\sqrt{-1}]$ respectively.
+
+A common sequence of steps worth mentioning is an infinite expansion followed by a contraction.
+Beginning with $R$ we first adjoin $x$ for a transcendental extension $R[x]$.
+Then we set some expression $f(x)$ to zero for a contraction $R[x]/f(x)$.
+
+
+\section{Arithmetic and its importance}
+
+To conclude this discussion justifying our choice of rings and finite fields, it may be motivating to examine their relationship to arithmetic.
+To clarify, by arithmetic we mean numbers under addition and multiplication.
+All rings and finite fields can be obtained using arithmetic as a starting structure and applying a sequence of the three transformations above, namely derived definitions, quotients, and extensions.
+Furthermore, the translation from arithmetic to any ring structure is \emph{natural}, usually only involving a few simple transformations.
+Many other structures in mathematics, in contrast, do not flow so naturally from a single source like arithmetic.
+If we accept this as justification for rings conditioned on arithmetic as our starting point, we may shift attention to justification for arithmetic. 
+
+Mathematics originates from the study of quantities, specifically via their representations as numbers and the ways in which they can be manipulated.
+This original study is known as arithmetic, and our promised justification for arithmetic is tasked with showing the naturality of quantities and their ways of manipulation.
+
+Regarding quantities, represented as numbers, their naturality and ubiquity is clear and taken for granted.
+Analysis of nearly any structure in mathematics involves arithmetic simply because quantities of one thing or another are inevitably relevant.
+Even the empty structure consisting of nothing, the simplest structure conceivable, involves the quantity zero.
+A natural next step beyond a structure with \emph{nothing} is a structure with \emph{something}, from which we may conceive the quantity \emph{one}.
+Continuing this process one may derive all natural numbers, repeatedly defining a new structure different from all previous structures, containing something they do not.
+
+Regarding the manipulations of quantities, that is operations on numbers, we begin with addition and observe that other operations immediately follow.
+The most basic operation performed on numbers is addition, and we take this operation for granted.
+With zero as the most basic number and addition as the most basic operation, one may ask what numbers add to zero, and doing so one conceives the negative numbers along with the subtraction operation.
+Another natural way to create a new operation is to extend an existing operation by repeating it more than once, or any number of times.
+Note how the repetition parameter is itself a \emph{number}.
+Repeating addition a certain number of times yields the multiplication operation.
+In this case both the operator and the operand are of the same type (a number), a property unique to arithmetic because in other structures where the operands are not numbers, this symmetry cannot exist.
+One may ask what numbers multiply to one, and doing so one conceives the rational numbers, along with the division operation.
+One may go further, defining exponentiation, logarithms, roots, and all other arithmetic concepts.
+Each structure is naturally derived from the previous.
+
